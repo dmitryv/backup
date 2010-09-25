@@ -42,7 +42,7 @@ module Backup
         self.keep_backups                = procedure.attributes['keep_backups']
 
         self.performed_file   = "#{timestamp}.#{trigger.gsub(' ', '-')}#{performed_file_extension}"
-        self.compressed_file  = "#{performed_file}.gz"
+        self.compressed_file  = "#{performed_file}.#{procedure.compressor_class::ARCHIVE_EXTENSION}"
         self.final_file       = compressed_file
 
         begin

@@ -60,6 +60,12 @@ module Backup
     autoload :Custom,     'backup/adapters/custom'
   end
 
+  module Compressors
+    autoload :Base,       'backup/compressors/base'
+    autoload :Gzip,       'backup/compressors/gzip'
+    autoload :SevenZip,   'backup/compressors/seven_zip'
+  end
+
   module Storage
     autoload :Base,       'backup/storage/base'
     autoload :CloudFiles, 'backup/storage/cloudfiles'

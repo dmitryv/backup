@@ -10,6 +10,7 @@ module Backup
         @trigger = trigger
         @adapter_configuration = Backup::Configuration::Adapter.new
         @storage_configuration = Backup::Configuration::Storage.new
+        @compressor = :gzip
       end
 
       def adapter(adapter, &block)
@@ -20,6 +21,10 @@ module Backup
       def storage(storage, &block)
         @storage_name = storage
         @storage_configuration.instance_eval &block
+      end
+
+      def compressor(compressor)
+        @compressor = compressor
       end
 
       def storage_class
@@ -42,6 +47,13 @@ module Backup
           when :sftp       then Backup::Record::SFTP
           when :local      then Backup::Record::Local
         end        
+      end
+
+      def compressor_class
+        case @compressor.to_sym
+          when :gzip       then Backup::Compressors::Gzip
+          when :seven_zip  then Backup::Compressors::SevenZip 
+        end
       end
 
       # Initializes the storing process depending on the store settings
